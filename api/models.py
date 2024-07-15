@@ -13,4 +13,13 @@ class Proveedor(models.Model):
 
     def __str__(self):
         return self.nombre_contacto
-                               
+
+
+class Catalogue(models.Model):
+    nombre= models.CharField(max_length=250)
+    precio=models.CharField(max_length=50)
+    descripccion=models.CharField(max_length=250)
+    proveedor=models.ForeignKey(Proveedor,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.nombre
