@@ -1,0 +1,94 @@
+{%extends "base.html"%}
+
+{% block content %}
+<div class="pricing">
+    <div class="container">
+        <div class="section-header"></div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="price-content">
+                    <div class="price-plan">
+                        <i class="ion-md-home"></i>
+                        <p class="price-title">Inventario:</p>
+                        <h2 class="price-amount"><span></span><span>130221</span><span></span></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="price-content features-price">
+                    <div class="price-plan">
+                        <i class="ion-md-star"></i>
+                        <p class="price-title">Pedidos:</p>
+                        <h2 class="price-amount"><span></span>20<span></span><span></span></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="price-content">
+                    <div class="price-plan">
+                        <i class="ion-md-gift"></i>
+                        <p class="price-title">Proveedores:</p>
+                        <h2 class="price-amount"><span></span><span>{{ numero_proveedores }}</span><span></span></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="table-container">
+                <div class="table-container">
+                    <h2>Proveedores</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nombre de la empresa</th>
+                                <th>RUC</th>
+                                <th>Dirección</th>
+                                <th>Nombre de contacto</th>
+                                <th>Teléfonos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for proveedor in proveedores %}
+                            <tr>
+                                <td>{{ proveedor.nombre_empresa }}</td>
+                                <td>{{ proveedor.ruc }}</td>
+                                <td>{{ proveedor.direccion }}</td>
+                                <td>{{ proveedor.nombre_contacto }}</td>
+                                <td>{{ proveedor.telefonos }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+           
+            <div class="table-container">
+                <h2>Proformas Activas</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for proforma in proformas %}
+                        <tr>
+                            <td>{{ proforma.id }}</td>
+                            <td>{{ proforma.cliente }}</td>
+                            <td>{{ proforma.producto }}</td>
+                            <td>{{ proforma.cantidad }}</td>
+                            <td>{{ proforma.precio }}</td>
+                            <td>{{ proforma.fecha }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}
