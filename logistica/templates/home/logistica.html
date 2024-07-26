@@ -1,6 +1,70 @@
 {%extends "base.html"%}
 
 {% block content %}
+<style>
+    /* Cuadros */
+        .price-content {
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+        
+        /*table*/
+        .container {
+            justify-content: space-between;
+            padding: 10px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {background-color: #d6d6d6;}
+
+        h2 {
+            margin-bottom: 0;
+        }
+
+        .table-container {
+        width: 100%;
+        overflow-x: visible;
+        margin-top: 25px;
+        }
+
+
+        {% comment %} scroll bar  {% endcomment %}
+
+        .table-container-right {
+            width: 100%;
+        }
+        
+        .table-wrapper {
+            height: 260px;
+            overflow-y: auto;
+        }
+
+        .table-container-left{
+            margin-top: 20px;
+        }
+
+</style>
 <div class="pricing">
     <div class="container">
         <div class="section-header"></div>
@@ -10,7 +74,7 @@
                     <div class="price-plan">
                         <i class="ion-md-home"></i>
                         <p class="price-title">Inventario:</p>
-                        <h2 class="price-amount"><span></span><span>130221</span><span></span></h2>
+                        <h2 class="price-amount"><span></span><span>{{ numero_stock }}</span><span></span></h2>
                     </div>
                 </div>
             </div>
@@ -31,63 +95,65 @@
                         <h2 class="price-amount"><span></span><span>{{ numero_proveedores }}</span><span></span></h2>
                     </div>
                 </div>
-            </div>
-            <div class="table-container">
+            </div>  
+        </div>
+        <div>
                 <div class="table-container">
-                    <h2>Proveedores</h2>
+                    <div class="table-container-right">
+                        <h2>Proveedores</h2>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nombre de la empresa</th>
+                                        <th>RUC</th>
+                                        <th>Nombre de contacto</th>
+                                        <th>Teléfonos</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for proveedor in proveedores %}
+                                    <tr onclick="window.location.href='{% url 'detail_proveedores' proveedor.id %}'" style="cursor: pointer;">
+                                        <td>{{ proveedor.nombre_empresa }}</td>
+                                        <td>{{ proveedor.ruc }}</td>
+                                        <td>{{ proveedor.nombre_contacto }}</td>
+                                        <td>{{ proveedor.telefonos }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container-left">
+                    <h2>Proformas Activas</h2>
                     <table>
                         <thead>
                             <tr>
-                                <th>Nombre de la empresa</th>
-                                <th>RUC</th>
-                                <th>Dirección</th>
-                                <th>Nombre de contacto</th>
-                                <th>Teléfonos</th>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                                <th>Fecha</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for proveedor in proveedores %}
+                            {% for proforma in proformas %}
                             <tr>
-                                <td>{{ proveedor.nombre_empresa }}</td>
-                                <td>{{ proveedor.ruc }}</td>
-                                <td>{{ proveedor.direccion }}</td>
-                                <td>{{ proveedor.nombre_contacto }}</td>
-                                <td>{{ proveedor.telefonos }}</td>
+                                <td>{{ proforma.id }}</td>
+                                <td>{{ proforma.cliente }}</td>
+                                <td>{{ proforma.producto }}</td>
+                                <td>{{ proforma.cantidad }}</td>
+                                <td>{{ proforma.precio }}</td>
+                                <td>{{ proforma.fecha }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
-           
-            <div class="table-container">
-                <h2>Proformas Activas</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Cliente</th>
-                            <th>Producto</th>
-                            <th>Cantidad</th>
-                            <th>Precio</th>
-                            <th>Fecha</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for proforma in proformas %}
-                        <tr>
-                            <td>{{ proforma.id }}</td>
-                            <td>{{ proforma.cliente }}</td>
-                            <td>{{ proforma.producto }}</td>
-                            <td>{{ proforma.cantidad }}</td>
-                            <td>{{ proforma.precio }}</td>
-                            <td>{{ proforma.fecha }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            
         </div>
     </div>
 </div>

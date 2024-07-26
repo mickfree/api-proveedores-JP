@@ -1,8 +1,8 @@
 from django.urls import path,include
 from .views import *
-from .views import home
+# from .views import home
 
 
 urlpatterns = [
-    path('', home, name='home'),
+    path('', LogisticaHomeView.as_view(), name='api_home'),
 ]

@@ -1,73 +1,66 @@
 from django.shortcuts import render
 import requests
 from django.http  import HttpResponse, JsonResponse
-from api.models import Proveedor  
+from api.models import Proveedor
+from django.views import View
 
+# def api_proveedores_home(request):
+#     URL_API = "http://localhost:8000/api/v1/proveedores/"  
 
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
-import requests
+#     response = requests.get(URL_API)
 
-def home(request):
-    # URL de tu propia API dentro de tu proyecto
-    URL_API = "http://localhost:8000/api/v1/proveedores/"  # Ajusta la URL según corresponda
+#     if response.status_code == 200:
 
-    # Realizar la solicitud GET a la API
-    response = requests.get(URL_API)
-
-    if response.status_code == 200:
-        # La solicitud fue exitosa, obtener y devolver los proveedores
-        proveedores = response.json()
+#         proveedores = response.json()
         
-        # Contar el número de proveedores recibidos
-        numero_proveedores = len(proveedores)
+#         numero_proveedores = len(proveedores)
         
-        # Relizar el context  en la funcion
-        return render(request, 'home/logistica.html', {'numero_proveedores': numero_proveedores, 'proveedores': proveedores})
-    else:
-        # Manejo de errores si la solicitud a la API falla
-        return HttpResponse("Error al obtener los proveedores", status=500)
+#         return render(request, 'home/logistica.html', {'numero_proveedores': numero_proveedores, 'proveedores': proveedores})
+#     else:
 
-def sum_proveedores(request):
-    # URL de tu propia API dentro de tu proyecto
-    URL_API = "http://localhost:8000/api/v1/proveedores/"  # Ajusta la URL según corresponda
+#         return HttpResponse("Error al obtener los proveedores", status=500)
+    
+# def api_inventario_home(request):
+    
+#     URL_API = "http://localhost:8000/api/v1/stock/"  
 
-    # Realizar la solicitud GET a la API
-    response = requests.get(URL_API)
+#     response = requests.get(URL_API)
 
-    if response.status_code == 200:
-        # La solicitud fue exitosa, obtener y devolver los proveedores
-        proveedores = response.json()
+#     if response.status_code == 200:
+
+#         stock = response.json()
         
-        # Contar el número de proveedores recibidos
-        numero_proveedores = len(proveedores)
+#         numero_stock = len(stock)
         
-        # Devolver una respuesta JSON con el número de proveedores
-        return JsonResponse({'numero_proveedores': numero_proveedores})
-    else:
-        # Manejo de errores si la solicitud a la API falla
-        return HttpResponse("Error al obtener los proveedores", status=500)
+#         return render(request, 'home/logistica.html', {'numero_stock': numero_stock, 'stock': stock})
+#     else:
 
+#         return HttpResponse("Error al obtener los proveedores", status=500)
+    
+class LogisticaHomeView(View):
+    template_name = 'home/logistica.html'
 
-def obtener_proveedores(request):
-    # Obtener todos los proveedores desde la base de datos
-    proveedores = Proveedor.objects.all()
+    def get(self, request):
+        context = {}
+        context.update(self.get_proveedores_data())
+        context.update(self.get_inventario_data())
+        return render(request, self.template_name, context)
 
-    # Crear una lista para almacenar los datos de los proveedores
-    proveedores_list = []
+    def get_proveedores_data(self):
+        proveedores_url = "http://localhost:8000/api/v1/proveedores/"
+        return self.fetch_api_data(proveedores_url, 'proveedores')
 
-    # Iterar sobre los proveedores y agregarlos a la lista
-    for proveedor in proveedores:
-        proveedor_dict = {
-            'id': proveedor.id,
-            'nombre_empresa': proveedor.nombre_empresa,
-            'ruc': proveedor.ruc,
-            'direccion': proveedor.direccion,
-            'nombre_contacto': proveedor.nombre_contacto,
-            'telefonos': proveedor.telefonos,
-            'observaciones': proveedor.observaciones,
-        }
-        proveedores_list.append(proveedor_dict)
+    def get_inventario_data(self):
+        inventario_url = "http://localhost:8000/api/v1/stock/"
+        return self.fetch_api_data(inventario_url, 'stock')
 
-    # Devolver una respuesta JSON con los datos de los proveedores
-    return render(request, 'base.html', {'obtener_proveedores': obtener_proveedores})
+    def fetch_api_data(self, url, data_type):
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
+            return {
+                f'numero_{data_type}': len(data),
+                data_type: data
+            }
+        else:
+            return {f'error_{data_type}': f"Error al obtener los {data_type}"}

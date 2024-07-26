@@ -40,7 +40,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'logistica',
+    'proveedores',
+    'crispy_forms',
 ]
+
+# cripy-forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
