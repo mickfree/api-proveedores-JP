@@ -156,7 +156,7 @@
         <form action="{% url 'edit_proveedores' proveedor.id %}">
             <input type="submit" class="btn" value="Editar" />
         </form>
-        <form>
+        <form action="{% url 'delete_proveedores' proveedor.id %}">
             {% csrf_token %}
             <input type="submit" class="btn btn-delete" value="Eliminar" />
         </form>

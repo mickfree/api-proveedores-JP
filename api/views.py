@@ -17,3 +17,11 @@ class StockViewSet(viewsets.ModelViewSet):
     queryset=Stock.objects.all()
     serializer_class= StockSerializer
     
+class SolicitudCompraViewSet(viewsets.ModelViewSet):
+    queryset=SolicitudCompra.objects.all()
+    serializer_class = SolicitudCompraSerializer
+    
+class SolicitudProductoViewSet(viewsets.ModelViewSet):
+    queryset = SolicitudProducto.objects.all()
+    serializer_class = SolicitudProductoSerializer
+    

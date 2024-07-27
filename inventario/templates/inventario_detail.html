@@ -1,0 +1,164 @@
+{%extends "base.html"%}
+{% block title %}Stock Detail{% endblock %}
+
+{% block content %}
+<style>
+    
+    /* style body  */
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0px;catalogo/templates/proveedores_delete.html
+        background-color: #f4f4f4;
+    }
+
+    /* style div container  */
+    
+    .container {
+        max-width: 800px;
+        margin: 40px auto 0; /* Añadido margen superior de 60px */
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    /* style for h1 and border line  */
+    
+    h1 {
+        color: #333;
+        border-bottom: 2px solid #333;
+        padding-bottom: 20px;
+    }
+
+    /* space between items */
+
+    .detail-item {
+        margin-bottom: 10px;
+    }
+    
+    /* boldface in titles */
+    .detail-label {
+        font-weight: bold;
+        color: #555;
+    }
+
+    {% comment %} .back-proveedor-btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+        margin-bottom: 20px;
+    } {% endcomment %}
+
+    {% comment %} .back-proveedor-btn:hover {
+        background-color: #45a049;
+    } {% endcomment %}
+
+    .edit-proveedor-btn{
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+    .edit-proveedor-btn:hover {
+        background-color: #45a049;
+    }
+
+    {% comment %} button container style {% endcomment %}
+
+    .button-container {
+        display: flex;
+        justify-content: flex-start; /* Alinea los botones a la izquierda */
+        align-items: center;
+        gap: 20px; /* Aumenta el espacio entre los botones */
+        margin-top: 20px;
+    }
+    
+    .button-container form {
+        margin: 0;
+    }
+    
+    .btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+    
+    .btn:hover {
+        background-color: #45a049;
+    }
+    
+    .btn-delete {
+        background-color: #f44336;
+        /* Elimina margin-left: auto; */
+    }
+    
+    .btn-delete:hover {
+        background-color: #d32f2f;
+    }
+    
+
+</style>
+
+<body>
+    <div class="container">
+        <h1>Detalles del Item</h1>
+        
+        <div class="detail-item">
+            <span class="detail-label">Catalogo:</span>
+            <span>{{ stock.catalogo.nombre }}</span>
+        </div>
+        
+        <div class="detail-item">
+            <span class="detail-label">Cantidad:</span>
+            <span>{{ stock.cantidad }}</span>
+        </div>
+        
+        <div class="detail-item">
+            <span class="detail-label">Estacion:</span>
+            <span>{{ stock.estacion }}</span>
+        </div>
+        
+        <div class="detail-item">
+            <span class="detail-label">Almacen:</span>
+            <span>{{ stock.almacen }}</span>
+        </div>
+
+        <div class="detail-item">
+            <span class="detail-label">Transporte:</span>
+            <span>{{ stock.transporte }}</span>
+        </div>
+        
+    
+        <div class="button-container">
+            <form action="{% url 'home_inventario' %}">
+                <input type="submit" class="btn" value="Regresar" />
+            </form>
+            <form action="{% url 'edit_inventario' stock.id %}">
+                <input type="submit" class="btn" value="Editar" />
+            </form> 
+            {% comment %} 
+            <form action="{% url 'delete_proveedores' proveedor.id %}">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-delete" value="Eliminar" />
+            </form> {% endcomment %}
+        </div> 
+    </div>
+    
+</body>
+{% endblock content %}

@@ -1,0 +1,20 @@
+{%extends "base.html"%}
+
+{% block title %}Lista de Solicitudes{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Añadir Productos</title>
+</head>
+<body>
+    <h1>Añadir Productos a {{ solicitud.numero }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" href="{% url 'home_proveedores' %}">Añadir Productos</button>
+    </form>
+</body>
+</html>
+{% endblock content %}

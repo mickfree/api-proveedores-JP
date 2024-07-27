@@ -5,4 +5,7 @@ from .views import *
 
 urlpatterns = [
     path('', LogisticaHomeView.as_view(), name='api_home'),
+    
 ]
+
+

@@ -3,68 +3,71 @@
 {% block content %}
 <style>
     /* Cuadros */
-        .price-content {
-            background-color: #ffffff;
-            border: 1px solid #dddddd;
-            border-radius: 5px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin: 20px 0;
-        }
-        
-        /*table*/
-        .container {
-            justify-content: space-between;
-            padding: 10px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        th, td {
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
+    .price-content {
+        background-color: #ffffff;
+        border: 1px solid #dddddd;
+        border-radius: 5px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 20px 0;
+    }
+    
+    /*table*/
+    .container {
+        justify-content: space-between;
+        padding: 10px;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff; /* Fondo entero para toda la tabla */
+    }
+    th, td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f4f4f4;
+    }
+    tr {
+        background-color: #f9f9f9; /* Fondo entero para las filas */
+    }
+    tr:hover {
+        background-color: #d6d6d6;
+    }
+    /* Remover la alternancia de color */
+    tr:nth-child(even) {
+        background-color: #f9f9f9; /* Mismo color para todas las filas */
+    }
 
-        tr:hover {background-color: #d6d6d6;}
+    h2 {
+        margin-bottom: 0;
+    }
 
-        h2 {
-            margin-bottom: 0;
-        }
-
-        .table-container {
+    .table-container {
         width: 100%;
         overflow-x: visible;
         margin-top: 25px;
-        }
+    }
 
+    .table-container-right {
+        width: 100%;
+    }
+    
+    .table-wrapper {
+        height: 260px;
+        overflow-y: auto;
+    }
 
-        {% comment %} scroll bar  {% endcomment %}
-
-        .table-container-right {
-            width: 100%;
-        }
-        
-        .table-wrapper {
-            height: 260px;
-            overflow-y: auto;
-        }
-
-        .table-container-left{
-            margin-top: 20px;
-        }
-
+    .table-container-left {
+        margin-top: 20px;
+    }
 </style>
+
 <div class="pricing">
     <div class="container">
         <div class="section-header"></div>
@@ -82,8 +85,8 @@
                 <div class="price-content features-price">
                     <div class="price-plan">
                         <i class="ion-md-star"></i>
-                        <p class="price-title">Pedidos:</p>
-                        <h2 class="price-amount"><span></span>20<span></span><span></span></h2>
+                        <p class="price-title">Num Solicitudes:</p>
+                        <h2 class="price-amount"><span></span>{{ numero_compra}}<span></span><span></span></h2>
                     </div>
                 </div>
             </div>

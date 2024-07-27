@@ -1,0 +1,18 @@
+{%extends "base.html"%}
+{% block content %}
+<body>
+    <div class="container">
+        <h1>Confirmar Eliminación</h1>
+        <p>¿Está seguro de que desea eliminar el catalogo "{{ catalogue.nombre }}"?</p>
+        <p>Si ya anadiste stock a este catalogo. eliminarlo ocasionara que el stock de este producto tambien se elimine!</p>
+        <p>Esta acción no se puede deshacer.</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-delete">Sí, Eliminar</button>
+        </form>
+        
+        <a href="{% url 'detail_catalogo' catalogue.id %}" class="btn">Cancelar</a>
+    </div>
+</body>
+{% endblock content %}

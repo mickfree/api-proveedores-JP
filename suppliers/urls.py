@@ -22,4 +22,7 @@ urlpatterns = [
     path('', include('logistica.urls')),
     path('proveedores/',include('proveedores.urls')),
     path('api/v1/',include('api.urls')),
+    path('catalogos/', include('catalogo.urls')),
+    path('inventario/', include('inventario.urls')),
+    path('solicitud/', include('solicitud.urls'))
 ]

@@ -5,78 +5,74 @@
 {% block content %}
 <style>
     
-    {% comment %} espacio entre el nav-bar y el div-main  {% endcomment %}
-    
+    /* Espacio entre el nav-bar y el div-main */
     .table-container {
         width: 100%;
         overflow-x: visible; /* Para manejar tablas muy anchas en pantallas pequeñas */
         margin-top: 25px;
     }
-
-    {% comment %} configuracion de tabla  {% endcomment %}
     
+    /* Configuración de tabla */
     table {
         width: 100%;
         border-collapse: collapse;
+        margin: 20px 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff; /* Fondo entero para toda la tabla */
     }
-
-    th{
-        padding: 8px 12px;
-        border: 1px solid #ddd;
-        text-align: center;
-        background-color: #d6d6d6;
-    }
-
-    td {
-        padding: 8px 12px;
+    
+    th, td {
+        padding: 12px 15px;
         border: 1px solid #ddd;
         text-align: left;
     }
-
+    
+    th {
+        background-color: #f4f4f4;
+    }
+    
+    tr {
+        background-color: #f9f9f9; /* Fondo entero para las filas */
+    }
+    
     tr:hover {
         background-color: #d6d6d6;
     }
-
-    {% comment %} ajusta los laterale del div  {% endcomment %}
-
-    .div-main{
+    
+    /* Ajusta los laterales del div */
+    .div-main {
         margin-left: 100px;
-        margin-right: 50px;    
-    
+        margin-right: 50px;
     }
-
-    {% comment %} ajusta la columna observaciones para que no se muestre del todo el texto {% endcomment %}
     
+    /* Ajusta la columna observaciones para que no se muestre del todo el texto */
     .observaciones {
         max-width: 200px; /* Ajusta este valor según necesites */
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
-
-    {% comment %} sirve para poner a la misma altura el boton de anadir proveedores  {% endcomment %}
+    
+    /* Sirve para poner a la misma altura el botón de añadir proveedores */
     .header-table {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
     }
-
-    {% comment %} Sirve para poner a la misma altura el search {% endcomment %}
-
+    
+    /* Sirve para poner a la misma altura el search */
     .left-section {
         display: flex;
         align-items: center;
     }
-
-    {% comment %} margin proveedores en total {% endcomment %}
-
+    
+    /* Margin proveedores en total */
     .proveedores-count {
         margin: 0;
     }
-
-    {% comment %} Buscador {% endcomment %}
-
+    
+    /* Buscador */
     .search-input {
         margin-left: 30px;
         padding: 8px;
@@ -84,9 +80,8 @@
         border-radius: 4px;
         font-size: 14px;
     }
-
-    {% comment %} add buttom 'anadir proveedores' {% endcomment %}
-
+    
+    /* Add botón 'añadir proveedores' */
     .add-proveedor-btn {
         padding: 10px 15px;
         background-color: #4CAF50;
@@ -96,10 +91,10 @@
         cursor: pointer;
         font-size: 16px;
     }
-
+    
     .add-proveedor-btn:hover {
         background-color: #45a049;
-    }
+    }    
     
 </style>
 <div class="div-main">
@@ -108,13 +103,13 @@
                     <div class="header-table">
                         <div class="left-section">
                             <h2 class="proveedores-count">Proveedores en total: {{numero_proveedores}}</h2>
-                            <input type="text" placeholder="Search.." class="search-input">
+                            <input type="text" id="searchInput" placeholder="Search.." class="search-input">
                         </div>
                         <form action="{% url 'form_proveedores' %}">
                             <input type="submit"  class="add-proveedor-btn" value="Añadir Proveedores" />
                         </form>
                     </div>
-                    <table>
+                    <table id="proveedoresTable">
                         <thead>
                             <tr>
                                 <th>Nombre de la empresa</th>
@@ -144,4 +139,26 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const table = document.getElementById('proveedoresTable');
+        const rows = table.getElementsByTagName('tr');
+    
+        searchInput.addEventListener('keyup', function() {
+            const searchTerm = searchInput.value.toLowerCase();
+    
+            for (let i = 1; i < rows.length; i++) {
+                const nombreEmpresa = rows[i].getElementsByTagName('td')[0].textContent.toLowerCase();
+                if (nombreEmpresa.includes(searchTerm)) {
+                    rows[i].style.display = '';
+                } else {
+                    rows[i].style.display = 'none';
+                }
+            }
+        });
+    });
+</script>
+
 {% endblock %}

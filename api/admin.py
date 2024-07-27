@@ -5,3 +5,5 @@ from .models import *
 admin.site.register(Proveedor)
 admin.site.register(Catalogue)
 admin.site.register(Stock)
+admin.site.register(SolicitudCompra)
+admin.site.register(SolicitudProducto)

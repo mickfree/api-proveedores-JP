@@ -1,0 +1,77 @@
+{%extends "base.html"%} {% block title %}Catalogo Form{% endblock %} 
+
+{% block content %}
+<style>
+  /* Style Header */
+
+  .header-table {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .left-section {
+    display: flex;
+    align-items: center;
+  }
+
+  .proveedores-count {
+    margin: 0;
+  }
+  
+</style>
+
+<link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+/>
+
+<div class="header-table">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="text-center">Añadir nuevo Item al Catalogo</h2>
+          </div>
+          <div class="card-body">
+            <form method="post">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="id_nombre_empresa" class="form-label"
+                  >Nombre</label
+                >
+                {{ form.nombre }}
+              </div>
+              <div class="mb-3">
+                <label for="id_direccion" class="form-label">Precio</label>
+                {{ form.precio }}
+              </div>
+              <div class="mb-3">
+                <label for="id_nombre_contacto" class="form-label"
+                  >Descripcion</label
+                >
+                {{ form.descripcion }}
+              </div>
+              <div class="mb-3">
+                <label for="id_telefonos" class="form-label">Proveedor</label>
+                {{ form.proveedor }}
+              </div>
+
+              <button type="submit" class="btn btn-primary">
+                Guardar Proveedor
+              </button>
+            </form>
+            <a href="{% url 'home_catalogos' %}" class="btn btn-link"
+              >Regresar</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}

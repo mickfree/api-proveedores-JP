@@ -19,3 +19,12 @@ class StockSerializer(serializers.ModelSerializer):
         model = Stock
         fields=('__all__')
         
+class SolicitudCompraSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = SolicitudCompra
+        fields = ('__all__')
+        
+class SolicitudProductoSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = SolicitudProducto
+        fields = ('__all__')

@@ -1,4 +1,6 @@
 from django.db import models
+from decimal import Decimal
+import uuid
 
 # Create your models here.
 
@@ -9,29 +11,102 @@ class Proveedor(models.Model):
     nombre_contacto = models.CharField(max_length=100)
     telefonos = models.CharField(max_length=100)
     observaciones = models.TextField(blank=True, null=True)
-    
 
     def __str__(self):
         return self.nombre_empresa
-    
+
 class Catalogue(models.Model):
-    nombre= models.CharField(max_length=250)
-    precio=models.CharField(max_length=50)
-    descripccion=models.CharField(max_length=250)
-    proveedor=models.ForeignKey(Proveedor,on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=250)
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    descripcion = models.CharField(max_length=250)
+    proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.nombre} proveedor: {self.proveedor}"
 
-
 class Stock(models.Model):
-    catalogo=models.ForeignKey(Catalogue,on_delete=models.CASCADE)
+    catalogo = models.ForeignKey(Catalogue, on_delete=models.CASCADE)
     cantidad = models.PositiveIntegerField()
     estacion = models.CharField(max_length=100)
     almacen = models.CharField(max_length=100)
     transporte = models.CharField(max_length=100)
-    
+
     def __str__(self):
         return f"{self.catalogo}"
-    
 
+class SolicitudCompra(models.Model):
+    numero = models.CharField(max_length=20, unique=True)
+    fecha = models.DateField(auto_now_add=True)
+    productos = models.ManyToManyField(Catalogue, through='SolicitudProducto', blank=True)
+    proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
+    entrega = models.DateField()
+    pago = models.DateField()
+    estado = models.CharField(max_length=50)
+    
+    def save(self, *args, **kwargs):
+        if not self.numero:
+            self.numero = str(uuid.uuid4())
+        super(SolicitudCompra, self).save(*args, **kwargs)
+        
+    def __str__(self):
+        return f"{self.numero} proveedor: {self.proveedor}"
+
+    
+class SolicitudProducto(models.Model):
+    solicitud = models.ForeignKey(SolicitudCompra, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Catalogue, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f'{self.solicitud} - {self.producto.nombre}'
+
+# class SolicitudProducto(models.Model):
+#     solicitud = models.ForeignKey(SolicitudCompra, on_delete=models.CASCADE)
+#     producto = models.ForeignKey(Catalogue, on_delete=models.CASCADE)
+#     cantidad = models.PositiveIntegerField(default=1)
+
+#     def __str__(self):
+#         return f"{self.solicitud.numero} - {self.producto.nombre}"
+
+# class Stock(models.Model):
+#     catalogo = models.ForeignKey(Catalogue, on_delete=models.CASCADE)
+#     cantidad = models.PositiveIntegerField()
+#     estacion = models.CharField(max_length=100)
+#     almacen = models.CharField(max_length=100)
+#     transporte = models.CharField(max_length=100)
+
+#     def __str__(self):
+#         return f"{self.catalogo}"
+
+# class SolicitudCompra(models.Model):
+#     numero = models.CharField(max_length=20, unique=True)
+#     fecha = models.DateField(auto_now_add=True)
+#     productos = models.ManyToManyField(Catalogue, through='SolicitudProducto')
+#     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
+#     entrega = models.DateField()
+#     pago = models.DateField()
+#     total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+#     estado = models.CharField(max_length=50)
+
+#     def __str__(self):
+#         return f"{self.numero} proveedor: {self.proveedor}"
+
+#     def calcular_total(self):
+#         total = Decimal('0.00')
+#         productos = SolicitudProducto.objects.filter(solicitud=self)
+#         for producto in productos:
+#             total += producto.producto.precio * producto.cantidad
+#         self.total = total
+#         self.save()
+
+#     def save(self, *args, **kwargs):
+#         self.calcular_total()
+#         super(SolicitudCompra, self).save(*args, **kwargs)
+
+# class SolicitudProducto(models.Model):
+#     solicitud = models.ForeignKey(SolicitudCompra, on_delete=models.CASCADE)
+#     producto = models.ForeignKey(Catalogue, on_delete=models.CASCADE)
+#     cantidad = models.PositiveIntegerField()
+
+#     def __str__(self):
+#         return f'{self.solicitud} - {self.producto.nombre}'

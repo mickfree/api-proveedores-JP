@@ -1,0 +1,74 @@
+{%extends "base.html"%}
+
+{% block title %}Consultar Pedido de Compra{% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Consultar Pedido de Compra</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Consultar Pedido de Compra</h1>
+
+    <div class="form-group">
+        <label for="proveedor">Proveedor:</label>
+        <input type="text" class="form-control" id="proveedor" value="{{ solicitud.proveedor.nombre_empresa }}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="fecha_pedido">Fecha de pedido:</label>
+        <input type="text" class="form-control" id="fecha_pedido" value="{{ solicitud.fecha }}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="fecha_entrega">Fecha de entrega:</label>
+        <input type="text" class="form-control" id="fecha_entrega" value="{{ solicitud.entrega }}" readonly>
+    </div>
+
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio/U</th>
+                <th>Total</th>
+                <th>IGV</th>
+                <th>Precio Total con IGV</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+            <tr>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.cantidad }}</td>
+                <td>{{ producto.precio_unitario }}</td>
+                <td>{{ producto.total }}</td>
+                <td>{{ producto.igv }}</td>
+                <td>{{ producto.precio_con_igv }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="form-group">
+        <label for="total_sin_iva">Total (sin IGV):</label>
+        <input type="text" class="form-control" id="total_sin_iva" value="{{ total_sin_igv }}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="total_con_iva">Total (con IGV):</label>
+        <input type="text" class="form-control" id="total_con_iva" value="{{ total_con_igv }}" readonly>
+    </div>
+    
+    {% comment %} <button class="btn btn-primary">Guardar</button> {% endcomment %}
+    <a href="{% url 'lista_solicitudes_compra' %}" class="btn btn-primary">Guardar</a>
+    {% comment %} <a href="{% url 'add_productos' solicitud.id %}" class="btn btn-warning">Add</a> {% endcomment %}
+    <button class="btn btn-success">Pedido recibido</button>
+    <button class="btn btn-danger">Anular pedido</button>
+</div>
+
+</body>
+</html>
+
+
+{% endblock content %}

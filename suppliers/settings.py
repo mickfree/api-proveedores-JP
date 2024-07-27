@@ -41,7 +41,10 @@ INSTALLED_APPS = [
     'api',
     'logistica',
     'proveedores',
+    'catalogo',
+    'inventario',
     'crispy_forms',
+    'solicitud'
 ]
 
 # cripy-forms
