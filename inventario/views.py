@@ -9,34 +9,6 @@ from .forms import *
 
 import requests
 
-  
-
-# class HomeStockView(View):
-#     def get(self, request):
-#         URL_API = "http://localhost:8000/api/v1/stock/"
-        
-#         response = requests.get(URL_API)
-        
-#         if response.status_code == 200:
-#             stocks = response.json()
-            
-#             # Obtener IDs de catálogos únicos
-#             catalogo_ids = {stock['catalogo'] for stock in stocks}
-#             catalogos = Catalogue.objects.filter(id__in=catalogo_ids)
-#             catalogo_dict = {catalogo.id: {'nombre': catalogo.nombre, 'precio': catalogo.precio} for catalogo in catalogos}
-            
-#             # Añadir nombre y precio del catálogo a cada stock
-#             for stock in stocks:
-#                 catalogo_info = catalogo_dict.get(stock['catalogo'], {"nombre": "Desconocido", "precio": 0})
-#                 stock['catalogo_nombre'] = catalogo_info['nombre']
-#                 # stock['catalogo_precio'] = catalogo_info['precio']
-                
-#             sum_stocks = sum(item['cantidad'] for item in stocks)
-            
-#             return render(request, 'inventario.html', {'sum_stocks': sum_stocks, 'stocks': stocks})
-#         else:
-#             return HttpResponse("Error al obtener los catálogos", status=500)
-
 class HomeStockView(View):
     def get(self, request):
         try:
@@ -58,9 +30,9 @@ class HomeStockView(View):
                     'catalogo': stock.catalogo_id,
                     'catalogo_nombre': catalogo_info['nombre'],
                     'catalogo_precio': catalogo_info['precio'],
-                    'estacion': stock.estacion,  # Añadir campo estacion
-                    'almacen': stock.almacen,  # Añadir campo almacen
-                    'transporte': stock.transporte  # Añadir campo transporte
+                    'estacion': stock.estacion,  
+                    'almacen': stock.almacen,  
+                    'transporte': stock.transporte  
                 }
                 stocks_list.append(stock_dict)
 

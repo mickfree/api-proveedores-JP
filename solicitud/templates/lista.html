@@ -1,17 +1,9 @@
-{%extends "base.html"%}
+{% extends "base.html" %}
 
 {% block title %}Lista de Solicitudes{% endblock %}
 
 {% block content %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Consultar Compras</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-</head>
-<body>
-
-<div class="container">
+<div class="container mt-4">
     <h1>Consultar Compras</h1>
     {% comment %} <a href="{% url 'crear_solicitud_compra' %}" class="btn btn-primary">Crear</a> {% endcomment %}
 
@@ -19,7 +11,7 @@
         <thead class="thead-light">
             <tr>
                 <th>Número</th>
-                <th>Fechade de solicitud</th>
+                <th>Fecha de solicitud</th>
                 <th>Productos</th>
                 <th>Proveedor</th>
                 <th>Entrega</th>
@@ -31,7 +23,7 @@
         <tbody>
             {% for solicitud in page_obj %}
             <tr>
-                <td><a href="{% url 'detalle_solicitud_compra' solicitud.numero  %}">{{ solicitud.numero }}</a></td>
+                <td><a href="{% url 'detalle_solicitud_compra' solicitud.numero %}">{{ solicitud.numero }}</a></td>
                 <td>{{ solicitud.fecha }}</td>
                 <td>
                     <ul>
@@ -68,7 +60,4 @@
         </span>
     </div>
 </div>
-
-</body>
-</html>
 {% endblock content %}

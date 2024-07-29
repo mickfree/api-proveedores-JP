@@ -3,7 +3,11 @@ import requests
 from django.http import HttpResponse, JsonResponse
 from api.models import *
 from django.views import View
-   
+
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
+@method_decorator(login_required, name='dispatch')
 class LogisticaHomeView(View):
     template_name = 'home/logistica.html'
 
