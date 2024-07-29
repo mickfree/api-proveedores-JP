@@ -10,32 +10,36 @@ from django.forms import *
 import requests
 
 # Implements Cbv's
-        
+
 class HomeCatalogosView(View):
     def get(self, request):
-        URL_API = "http://localhost:8000/api/v1/catalogues/"
-        
-        response = requests.get(URL_API)
-        
-        if response.status_code == 200:
-            
-            catalogos = response.json()
-            
+        try:
+            # Obtén todos los catálogos
+            catalogos = Catalogue.objects.all()
+
             # Obtener IDs de proveedores únicos
-            proveedor_ids = {catalogo['proveedor'] for catalogo in catalogos}
+            proveedor_ids = catalogos.values_list('proveedor_id', flat=True).distinct()
             proveedores = Proveedor.objects.filter(id__in=proveedor_ids)
             proveedor_dict = {proveedor.id: proveedor.nombre_empresa for proveedor in proveedores}
-            
+
             # Añadir nombre del proveedor a cada catálogo
+            catalogos_list = []
             for catalogo in catalogos:
-                catalogo['nombre_empresa'] = proveedor_dict.get(catalogo['proveedor'], "Desconocido")
-            
-            numero_catalogos = len(catalogos)
-            
-            return render(request, 'catalogo.html', {'numero_catalogos': numero_catalogos, 'catalogos': catalogos})
-        else:
-            return HttpResponse("Error al obtener los catálogos", status=500)
-        
+                catalogo_dict = {
+                    'id': catalogo.id,
+                    'nombre': catalogo.nombre,
+                    'proveedor': catalogo.proveedor_id,
+                    'nombre_empresa': proveedor_dict.get(catalogo.proveedor_id, "Desconocido"),
+                    'precio': catalogo.precio,  
+                    'descripcion': catalogo.descripcion
+                }
+                catalogos_list.append(catalogo_dict)
+
+            numero_catalogos = len(catalogos_list)
+
+            return render(request, 'catalogo.html', {'numero_catalogos': numero_catalogos, 'catalogos': catalogos_list})
+        except Exception as e:
+            return HttpResponse(f"Error al obtener los catálogos: {str(e)}", status=500)
 
 class CatalogueCreateView(CreateView):
     model = Catalogue

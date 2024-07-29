@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from api.models import SolicitudCompra, SolicitudProducto
 from decimal import Decimal, ROUND_HALF_UP
 from django.forms import modelformset_factory
+from .forms import *
 
 def lista_solicitudes_compra(request):
     solicitud_list = SolicitudCompra.objects.all().prefetch_related('productos', 'solicitudproducto_set')
@@ -73,7 +74,6 @@ def detalle_solicitud_compra(request, numero): #numero
         'total_con_igv': total_con_igv
     })
 
-from .forms import *
 
 def crear_solicitud_compra(request):
     if request.method == 'POST':

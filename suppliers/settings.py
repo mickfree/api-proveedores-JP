@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'catalogo',
     'inventario',
     'crispy_forms',
-    'solicitud'
+    'solicitud',
 ]
 
 # cripy-forms
@@ -58,7 +58,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
+
+
 
 ROOT_URLCONF = 'suppliers.urls'
 
@@ -77,6 +80,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'suppliers.wsgi.application'
 
@@ -132,3 +136,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

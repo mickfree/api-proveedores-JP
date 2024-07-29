@@ -4,24 +4,19 @@ from django.views.generic import *
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 from .forms import ProveedorForm
-from api.models import Proveedor
+from api.models import *
 from django.views.decorators.http import require_POST 
 import requests
 
 # Implements Cbv's
 class HomeProveedoresView(View):
     def get(self, request):
-        URL_API = "http://localhost:8000/api/v1/proveedores/"
-
-        response = requests.get(URL_API)
-
-        if response.status_code == 200:
-            proveedores = response.json()
-            numero_proveedores = len(proveedores)
+        try:
+            proveedores = Proveedor.objects.all()
+            numero_proveedores = proveedores.count()
             return render(request, 'proveedores.html', {'numero_proveedores': numero_proveedores, 'proveedores': proveedores})
-        else:
-            return HttpResponse("Error al obtener los proveedores", status=500)
-        
+        except Exception as e:
+            return HttpResponse(f"Error al obtener los proveedores: {str(e)}", status=500)
 
 class ProveedorCreateView(CreateView):
     model = Proveedor
