@@ -1,25 +1,20 @@
-{%extends "base.html"%}
-{% block title %}Catalogo Edit{% endblock %}
+{% extends "base.html" %}
+{% block title %}Editar Catálogo{% endblock %}
 
 {% block content %}
 <style>
-    /* Estilos similares a los de la página de detalles */
-    body {
+    /* Estilos específicos para la página de edición */
+    .edit-container {
         font-family: Arial, sans-serif;
         line-height: 1.6;
-        margin: 0;
-        padding: 20px;
-        background-color: #f4f4f4;
-    }
-    .container {
         max-width: 800px;
-        margin: 60px auto 0;
+        margin: 60px auto;
         background-color: #fff;
         padding: 20px;
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    h1 {
+    .edit-container h1 {
         color: #333;
         border-bottom: 2px solid #333;
         padding-bottom: 10px;
@@ -27,12 +22,12 @@
     .form-group {
         margin-bottom: 15px;
     }
-    label {
+    .form-group label {
         display: block;
         margin-bottom: 5px;
         font-weight: bold;
     }
-    input[type="text"], input[type="tel"], textarea {
+    .form-group input[type="text"], .form-group input[type="tel"], .form-group textarea {
         width: 100%;
         padding: 8px;
         border: 1px solid #ddd;
@@ -51,19 +46,18 @@
         background-color: #45a049;
     }
 </style>
-<body>
-    <div class="container">
-        <h1>Editar Catalogo</h1>
-        <form method="post">
-            {% csrf_token %}
-            {% for field in form %}
-                <div class="form-group">
-                    {{ field.label_tag }}
-                    {{ field }}
-                </div>
-            {% endfor %}
-            <input type="submit" value="Guardar Cambios" class="submit-btn">
-        </form>
-    </div>
-</body>
-{% endblock content %}
+
+<div class="edit-container">
+    <h1>Editar Catálogo</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+            </div>
+        {% endfor %}
+        <input type="submit" value="Guardar Cambios" class="submit-btn">
+    </form>
+</div>
+{% endblock %}

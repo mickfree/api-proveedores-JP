@@ -18,7 +18,7 @@ def lista_solicitudes_compra(request):
             subtotal = sp.cantidad * producto.precio  # Usa producto.precio en lugar de sp.precio_unitario
             igv = subtotal * Decimal('0.18')
             total_producto = subtotal + igv
-            total_con_igv += total_producto
+            total_con_igv += total_producto.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
             productos.append({
                 'nombre': producto.nombre,
                 'cantidad': sp.cantidad,
@@ -59,7 +59,7 @@ def detalle_solicitud_compra(request, numero): #numero
                'precio_unitario':precio_unitario,
                'total':total,
                'precio_sin_igv': precio_sin_igv.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP),
-               'precio_con_igv': precio_con_igv,
+               'precio_con_igv': precio_con_igv.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP),
              })
     
     total_sin_igv = sum([p['precio_sin_igv'] * p['cantidad'] for p in productos_detalle])

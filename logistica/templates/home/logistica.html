@@ -1,4 +1,4 @@
-{%extends "base.html"%}
+{% extends "base.html" %}
 
 {% block content %}
 <style>
@@ -37,7 +37,7 @@
         background-color: #f9f9f9; /* Fondo entero para las filas */
     }
     tr:hover {
-        background-color: #d6d6d6;
+        background-color: #d6d6d6 !important; /* Asegúrate de que el hover tenga más prioridad */
     }
     /* Remover la alternancia de color */
     tr:nth-child(even) {
@@ -66,6 +66,12 @@
     .table-container-left {
         margin-top: 20px;
     }
+
+    /* Estilo para la tabla de solicitudes */
+    .solicitudes-wrapper {
+        max-height: calc(6 * 80px); /* Ajusta 50px al valor adecuado de la altura de fila */
+        overflow-y: auto;
+    }
 </style>
 
 <div class="pricing">
@@ -86,7 +92,7 @@
                     <div class="price-plan">
                         <i class="ion-md-star"></i>
                         <p class="price-title">Num Solicitudes:</p>
-                        <h2 class="price-amount"><span></span>{{ numero_compra}}<span></span><span></span></h2>
+                        <h2 class="price-amount"><span></span>{{ numero_compra }}<span></span><span></span></h2>
                     </div>
                 </div>
             </div>
@@ -101,59 +107,60 @@
             </div>  
         </div>
         <div>
-                <div class="table-container">
-                    <div class="table-container-right">
-                        <h2>Proveedores</h2>
-                        <div class="table-wrapper">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Nombre de la empresa</th>
-                                        <th>RUC</th>
-                                        <th>Nombre de contacto</th>
-                                        <th>Teléfonos</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for proveedor in proveedores %}
-                                    <tr onclick="window.location.href='{% url 'detail_proveedores' proveedor.id %}'" style="cursor: pointer;">
-                                        <td>{{ proveedor.nombre_empresa }}</td>
-                                        <td>{{ proveedor.ruc }}</td>
-                                        <td>{{ proveedor.nombre_contacto }}</td>
-                                        <td>{{ proveedor.telefonos }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+            <div class="table-container">
+                <div class="table-container-right">
+                    <h2>Proveedores</h2>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre de la empresa</th>
+                                    <th>RUC</th>
+                                    <th>Nombre de contacto</th>
+                                    <th>Teléfonos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for proveedor in proveedores %}
+                                <tr onclick="window.location.href='{% url 'detail_proveedores' proveedor.id %}'" style="cursor: pointer;">
+                                    <td>{{ proveedor.nombre_empresa }}</td>
+                                    <td>{{ proveedor.ruc }}</td>
+                                    <td>{{ proveedor.nombre_contacto }}</td>
+                                    <td>{{ proveedor.telefonos }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+            </div>
 
-                <div class="table-container-left">
-                    <h2>Proformas Activas</h2>
+            <div class="table-container-left">
+                <h2>Solicitudes</h2>
+                <div class="solicitudes-wrapper">
                     <table>
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Cliente</th>
+                                <th>Número</th>
                                 <th>Producto</th>
-                                <th>Cantidad</th>
-                                <th>Precio</th>
-                                <th>Fecha</th>
+                                <th>Proveedor</th>
+                                <th>F. Entrega</th>
+                                <th>F. Pago</th>
+                                <th>Estado</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for proforma in proformas %}
+                            {% for solicitud in solicitudes %}
                             <tr>
-                                <td>{{ proforma.id }}</td>
-                                <td>{{ proforma.cliente }}</td>
-                                <td>{{ proforma.producto }}</td>
-                                <td>{{ proforma.cantidad }}</td>
-                                <td>{{ proforma.precio }}</td>
-                                <td>{{ proforma.fecha }}</td>
+                                <td>{{ solicitud.numero }}</td>
+                                <td>{{ solicitud.productos }}</td>
+                                <td>{{ solicitud.proveedor }}</td>
+                                <td>{{ solicitud.entrega }}</td>
+                                <td>{{ solicitud.pago }}</td>
+                                <td>{{ solicitud.estado }}</td>
                             </tr>
                             {% endfor %}
-                        </tbody>
+                        </tbody>                    
                     </table>
                 </div>
             </div>

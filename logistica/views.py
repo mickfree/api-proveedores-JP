@@ -33,10 +33,31 @@ class LogisticaHomeView(View):
             'stock': list(stock.values())
         }
 
+    # def get_solicitud_data(self):
+    #     solicitudes = SolicitudCompra.objects.all()
+    #     return {
+    #         'numero_compra': solicitudes.count(),
+    #         'compra': list(solicitudes.values())
+    #     }
+
+    
     def get_solicitud_data(self):
-        solicitudes = SolicitudCompra.objects.all()
-        return {
-            'numero_compra': solicitudes.count(),
-            'compra': list(solicitudes.values())
-        }
+        solicitud_list = SolicitudCompra.objects.all().prefetch_related('productos', 'solicitudproducto_set')
+        data = []
+        for solicitud in solicitud_list:
+            if not solicitud.numero:  # Asegúrate de que el número no esté vacío
+                continue  # Salta esta solicitud si no tiene número
+            productos = []
+            for sp in solicitud.solicitudproducto_set.all():
+                producto = sp.producto
+                productos.append(producto.nombre)
+            data.append({
+                'numero': solicitud.numero,
+                'productos': ', '.join(productos),
+                'proveedor': solicitud.proveedor.nombre_empresa,
+                'entrega': solicitud.entrega,
+                'pago': solicitud.pago,
+                'estado': solicitud.estado
+            })
+        return {'solicitudes': data, 'numero_compra': solicitud_list.count()}
 
