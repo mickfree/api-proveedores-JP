@@ -13,7 +13,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4e8dbca1ea3a1fcb5201a3424a90bf5c3445a249
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -40,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api',
+<<<<<<< HEAD
     'logistica',
     'proveedores',
     'catalogo',
@@ -51,6 +55,10 @@ INSTALLED_APPS = [
 # cripy-forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+=======
+]
+
+>>>>>>> 4e8dbca1ea3a1fcb5201a3424a90bf5c3445a249
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -59,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+<<<<<<< HEAD
 
 ]
 
@@ -72,6 +81,16 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'suppliers', 'templates')],
+=======
+]
+
+ROOT_URLCONF = 'suppliers.urls'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+>>>>>>> 4e8dbca1ea3a1fcb5201a3424a90bf5c3445a249
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -84,7 +103,10 @@ TEMPLATES = [
     },
 ]
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4e8dbca1ea3a1fcb5201a3424a90bf5c3445a249
 WSGI_APPLICATION = 'suppliers.wsgi.application'
 
 
@@ -139,9 +161,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+<<<<<<< HEAD
 
 #
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/' 
 
 # LOGOUT_REDIRECT_URL = '/'
+=======
+>>>>>>> 4e8dbca1ea3a1fcb5201a3424a90bf5c3445a249

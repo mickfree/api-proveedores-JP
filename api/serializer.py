@@ -5,6 +5,7 @@ from .models import *
 class ProveedorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Proveedor
+<<<<<<< HEAD
         fields=('__all__')
 
 class CatalogueSerializer(serializers.ModelSerializer):
@@ -28,3 +29,6 @@ class SolicitudProductoSerializer(serializers.ModelSerializer):
     class Meta: 
         model = SolicitudProducto
         fields = ('__all__')
+=======
+        fields=('__all__')
+>>>>>>> 4e8dbca1ea3a1fcb5201a3424a90bf5c3445a249

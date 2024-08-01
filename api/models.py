@@ -1,10 +1,14 @@
 from django.db import models
+<<<<<<< HEAD
 from decimal import Decimal
 import uuid
+=======
+>>>>>>> 4e8dbca1ea3a1fcb5201a3424a90bf5c3445a249
 
 # Create your models here.
 
 class Proveedor(models.Model):
+<<<<<<< HEAD
     nombre_empresa = models.CharField(max_length=100)
     ruc = models.CharField(max_length=13, unique=True)
     direccion = models.CharField(max_length=255)
@@ -60,3 +64,16 @@ class SolicitudProducto(models.Model):
     def __str__(self):
         return f'{self.solicitud} - {self.producto.nombre}'
 
+=======
+    ruc = models.CharField(max_length=13, unique=True)
+    direccion = models.CharField(max_length=255)
+    nombre_contacto = models.CharField(max_length=100)
+    items = models.TextField()
+    telefonos = models.CharField(max_length=100)
+    observaciones = models.TextField(blank=True, null=True)
+    
+
+    def __str__(self):
+        return self.nombre_contacto
+                               
+>>>>>>> 4e8dbca1ea3a1fcb5201a3424a90bf5c3445a249

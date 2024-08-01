@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 
+<<<<<<< HEAD
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -32,3 +33,9 @@ urlpatterns = [
 ]
 
 
+=======
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api/v1/',include('api.urls'))
+]
+>>>>>>> 4e8dbca1ea3a1fcb5201a3424a90bf5c3445a249
