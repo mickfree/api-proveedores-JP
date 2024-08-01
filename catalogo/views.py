@@ -1,11 +1,10 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render,redirect
 from django.http  import HttpResponse
 from django.views.generic import *
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 from api.models import *
 from .forms import *
-from django.views.decorators.http import require_POST 
 from django.forms import *
 import requests
 

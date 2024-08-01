@@ -1,9 +1,6 @@
 from django.shortcuts import render
-import requests
-from django.http import HttpResponse, JsonResponse
 from api.models import *
 from django.views import View
-
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
@@ -33,12 +30,6 @@ class LogisticaHomeView(View):
             'stock': list(stock.values())
         }
 
-    # def get_solicitud_data(self):
-    #     solicitudes = SolicitudCompra.objects.all()
-    #     return {
-    #         'numero_compra': solicitudes.count(),
-    #         'compra': list(solicitudes.values())
-    #     }
 
     
     def get_solicitud_data(self):
